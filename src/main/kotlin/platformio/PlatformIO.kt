@@ -7,6 +7,7 @@ import com.intellij.openapi.externalSystem.model.ProjectKeys
 import com.intellij.openapi.externalSystem.model.ProjectSystemId
 import platformio.external.model.EntityData
 import platformio.filetype.FileType
+import javax.swing.Icon
 
 object PlatformIO {
     const val name = "PlatformIO"
@@ -14,6 +15,6 @@ object PlatformIO {
     val ID = ProjectSystemId(name)
     const val INI = "platformio.ini"
     val log = Logger.getInstance(name)
-    val icon = AllIcons.General.Information
+    val icon: Icon = AllIcons.General.Information
     val KEY = Key.create(EntityData::class.java, ProjectKeys.PROJECT.processingWeight + 1)
 }

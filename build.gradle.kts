@@ -22,5 +22,6 @@ plugins {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
   version = "2019.2"
+  type = "CL"
   setPlugins("com.jetbrains.plugins.ini4idea:192.5728.26")
 }

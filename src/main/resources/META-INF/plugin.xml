@@ -16,30 +16,45 @@
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
+  <idea-version since-build="2019.2"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
   <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
 
   -->
   <depends>com.jetbrains.plugins.ini4idea</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.cidr.lang</depends>
+    <depends>com.intellij.modules.cidr.debugger</depends>
+    <!-- depends>org.jetbrains.plugins.gradle.java</depends -->
+
+    <!-- https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000738670/comments/115000613284 -->
+    <depends optional="true" config-file="clion.xml">com.intellij.modules.clion</depends>
 
   <extensions defaultExtensionNs="com.intellij">
       <configurationType implementation="platformio.execution.configurations.Type" />
-      <toolWindow id="PlatformIO" anchor="right" factoryClass="platformio.toolwindow.Factory" conditionClass="platformio.Condition"/>
+      <toolWindow id="Tool" anchor="right" factoryClass="platformio.toolwindow.tool.Factory" conditionClass="platformio.Condition"/>
+      <toolWindow id="Console" anchor="bottom" factoryClass="platformio.toolwindow.console.Factory" conditionClass="platformio.Condition"/>
       <!-- <fileTypeFactory implementation="platformio.filetype.Factory" />
       <fileTypeDetector implementation="platformio.filetype.Factory" /> -->
       <externalSystemManager implementation="platformio.external.SystemManager" />
-     <compiler.buildTargetScopeProvider implementation="platformio.build.TargetScopeProvider" />
+     <!-- compiler.buildTargetScopeProvider implementation="platformio.build.TargetScopeProvider" /-->
       <lang.namesValidator language="Ini" implementationClass="platformio.lang.refactoring.NamesValidator"/>
       <completion.contributor language="Ini" id="Inidirective"
                               implementationClass="platformio.codeInsight.completion.INICompletionContributor"/>-
         <annotator language="Ini" implementationClass="platformio.lang.annotation.INIAnnotator" />
       <backgroundPostStartupActivity implementation="platformio.Startup" />
+      <!-- framework.type implementation="platformio.framework.Type" / -->
+      <!-- https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000055950-how-can-you-add-items-to-CLion-s-New-Project-window -->
+      <!-- projectOpenProcessor id="PlatformIO" implementation="platformio.Import" / -->
+      <!-- projectImportBuilder implementation="platformio.Builder" / -->
+      <!-- projectImportProvider implementation="platformio.Provider" / -->
+
+      <!-- https://intellij-support.jetbrains.com/hc/en-us/community/posts/360000055950-how-can-you-add-items-to-CLion-s-New-Project-window -->
+      <!-- moduleBuilder builderClass="platformio.module.Builder" / -->
+      <!-- projectWizard.projectCategory implementation="platformio" / -->
   </extensions>
 
   <actions>

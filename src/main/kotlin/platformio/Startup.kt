@@ -110,15 +110,19 @@ fun markDirs(root: VirtualFile, psi: PsiFile, module: Module, rootManager: Modul
 
         content.addSourceFolder(testSrcDir, true)
     }
-    //walk thrue .pio/libdeps/*/*/ and add them as sourceroots
+    //walk thru .pio/libdeps/*/*/ and add them as sourceroots
     val libdeps = root.findChild(".pio")?.findChild("libdeps")
     libdeps?.children?.forEach { libs -> run {
             libs?.children?.forEach { l -> run {
                     val src = l.findChild("src")
                     if (src == null) {
-                        content.addSourceFolder(l, false)
+                        if (!rootManager.excludeRoots.contains(l) && !rootManager.sourceRoots.contains(l)) {
+                            content.addSourceFolder(l, false)
+                        } else {}
                     } else {
-                        content.addSourceFolder(src, false)
+                        if (!rootManager.excludeRoots.contains(src) && !rootManager.sourceRoots.contains(src)) {
+                            content.addSourceFolder(src, false)
+                        } else {}
                     }
                 }
             }

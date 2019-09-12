@@ -28,7 +28,8 @@ import javax.swing.JLabel
 class Generator : DirectoryProjectGenerator<Settings> {
     override fun generateProject(project: Project, baseDir: VirtualFile, settings: Settings, module: Module) {
         ApplicationManager.getApplication().runWriteAction {
-            val init = GeneralCommandLine("platformio", "init")
+            baseDir.createChildDirectory(this, ".idea")
+            val init = GeneralCommandLine("platformio", "init", "--ide", "clion")
             init.workDirectory = File(baseDir.path)
             val processHandler = OSProcessHandler(init)
 

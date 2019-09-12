@@ -23,7 +23,7 @@ class State(enviroment: ExecutionEnvironment, val configuration: RunConfiguratio
     private fun createCommandLine(): ProcessHandler {
         val cmd = GeneralCommandLine()
         val project = environment.project
-        findExternalData(project)
+        //findExternalData(project)
         cmd.workDirectory =  File(project.basePath)
         cmd.exePath = "platformio"
         cmd.addParameter(configuration.command.command)

@@ -2,36 +2,26 @@
   <id>nexos.platformio</id>
   <name>PlatformIO</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="bernd@dutkowski.net" url="https://github.com/nexoscp/PlatformIOLion">neXos</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      <a href="https://platformio.org">PlatformIO</a>
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
     ]]>
   </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="2019.2"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-
-  -->
   <depends>com.jetbrains.plugins.ini4idea</depends>
-    <depends>com.intellij.modules.lang</depends>
-    <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.cidr.lang</depends>
-    <depends>com.intellij.modules.cidr.debugger</depends>
-    <!-- depends>org.jetbrains.plugins.gradle.java</depends -->
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.cidr.lang</depends>
+  <depends>com.intellij.modules.cidr.debugger</depends>
 
-    <!-- https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000738670/comments/115000613284 -->
-    <depends optional="true" config-file="clion.xml">com.intellij.modules.clion</depends>
+  <!-- https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000738670/comments/115000613284 -->
+  <depends optional="true" config-file="clion.xml">com.intellij.modules.clion</depends>
 
   <extensions defaultExtensionNs="com.intellij">
       <configurationType implementation="platformio.execution.configurations.Type" />
@@ -58,7 +48,5 @@
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
   </actions>
-
 </idea-plugin>

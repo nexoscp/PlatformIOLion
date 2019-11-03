@@ -49,4 +49,9 @@
 
   <actions>
   </actions>
+    <application-components>
+        <component>
+            <implementation-class>platformio.services.impl.CommandLinePlatformIOService</implementation-class>
+        </component>
+    </application-components>
 </idea-plugin>

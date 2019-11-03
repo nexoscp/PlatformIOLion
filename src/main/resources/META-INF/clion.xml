@@ -1,5 +1,7 @@
 <idea-plugin>
     <extensions defaultExtensionNs="com.intellij">
-        <directoryProjectGenerator implementation="platformio.project.Generator" />
+        <directoryProjectGenerator implementation="platformio.project.Generator"/>
+        <applicationService serviceInterface="platformio.services.PlatformIOService"
+                            serviceImplementation="platformio.services.impl.CommandLinePlatformIOService"/>
     </extensions>
 </idea-plugin>

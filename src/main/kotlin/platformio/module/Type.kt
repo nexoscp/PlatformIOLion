@@ -17,7 +17,7 @@ class Type : ModuleType<Builder>(PlatformIO.ID.id) {
     }
 
     override fun getDescription(): String {
-        return ""
+        return "PlatformIO module"
     }
 
     override fun getNodeIcon(isOpened: Boolean): Icon {

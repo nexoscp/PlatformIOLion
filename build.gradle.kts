@@ -20,7 +20,7 @@ dependencies {
   implementation( "com.beust:klaxon:5.0.13")
   api("org.junit.jupiter:junit-jupiter-api:5.3.1")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.1")
-  testCompile("org.assertj:assertj-swing-junit:3.9.2")
+  testCompile("org.assertj", "assertj-swing-junit", "3.9.2")
   testCompile("org.hamcrest:hamcrest-all:1.3")
   testCompile("org.mockito:mockito-junit-jupiter:3.1.0")
 }
@@ -40,4 +40,8 @@ intellij {
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
   freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+}
+
+tasks.test {
+ // systemProperties(Pair("java.awt.headless", "true"))
 }

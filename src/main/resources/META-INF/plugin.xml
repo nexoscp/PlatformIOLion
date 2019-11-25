@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>nexos.platformio</id>
   <name>PlatformIO</name>
-  <version>1.0</version>
+  <!-- version>1.0</version -->
   <vendor email="bernd@dutkowski.net" url="https://github.com/nexoscp/PlatformIOLion">neXos</vendor>
 
   <description><![CDATA[

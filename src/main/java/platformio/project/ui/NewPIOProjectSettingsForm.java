@@ -1,19 +1,25 @@
 package platformio.project.ui;
 
-import com.intellij.ui.components.JBScrollPane;
-import org.jetbrains.annotations.NotNull;
-import platformio.services.Board;
-import platformio.services.PlatformIOService;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import com.intellij.ui.components.JBScrollPane;
+import platformio.services.Board;
+import platformio.services.PlatformIOService;
+
+import org.jetbrains.annotations.NotNull;
 
 public class NewPIOProjectSettingsForm {
     public static final String SELECT_BOARD_BUTTON_NAME = "selectBoardButton";
+    public static final String ERROR_MESSAGE_LABEL = "errorMessageLabel";
+    public static final String ERROR_MESSAGE = "Please install PlatformIO CLI";
     public static final String SELECTED_BOARD_TABLE_NAME = "selectedBoardTable";
     public static final String NAME_COLUMN = "Name";
     public static final String PLATFORM_COLUMN = "Platform";
@@ -22,8 +28,10 @@ public class NewPIOProjectSettingsForm {
     private JPanel mainPanel;
     private JButton selectBoardButton;
     private JScrollPane selectedBoardsScrollPane;
+    private JLabel errorLabelMessage;
     private DefaultTableModel selectedBoardsTableModel;
     private Set<Board> selectedBoards = new HashSet<>();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public NewPIOProjectSettingsForm(PlatformIOService platformIOService) {
         this.platformIOService = platformIOService;
@@ -37,11 +45,19 @@ public class NewPIOProjectSettingsForm {
             this.selectedBoards = new HashSet<>(selectedBoards);
             clearTable();
             selectedBoards.forEach(board -> selectedBoardsTableModel.addRow(
-                    new Object[]{
+                    new Object[] {
                             board.getName(),
                             board.getPlatform(),
                             board.getFramework()
                     }));
+        });
+
+        executorService.execute(() -> {
+            if (!platformIOService.isAvailable()) {
+                selectBoardButton.setEnabled(false);
+                errorLabelMessage.setText(ERROR_MESSAGE);
+                errorLabelMessage.setName(ERROR_MESSAGE_LABEL);
+            }
         });
     }
 

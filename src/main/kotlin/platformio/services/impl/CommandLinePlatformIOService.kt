@@ -3,10 +3,7 @@ package platformio.services.impl
 import com.beust.klaxon.Klaxon
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.filters.TextConsoleBuilderFactory
-import com.intellij.execution.process.CapturingProcessHandler
-import com.intellij.execution.process.OSProcessHandler
-import com.intellij.execution.process.ProcessEvent
-import com.intellij.execution.process.ProcessListener
+import com.intellij.execution.process.*
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
@@ -42,11 +39,8 @@ class CommandLinePlatformIOService : PlatformIOService {
 
     private fun loadBoardsInternal(): Future<List<Board>> {
         return executorService.submit(Callable<List<Board>> {
-            val commandLine = GeneralCommandLine("platformio", "boards", "--json-output")
-            val processHandler = CapturingProcessHandler(commandLine)
-
             var start = System.currentTimeMillis()
-            val output = processHandler.runProcess()
+            val output = runCommand("platformio", "boards", "--json-output")
             log.info("Time to load boards ${System.currentTimeMillis() - start}")
 
             if (output.exitCode == 0) {
@@ -63,6 +57,13 @@ class CommandLinePlatformIOService : PlatformIOService {
                 emptyList()
             }
         })
+    }
+
+    private fun runCommand(vararg command: String): ProcessOutput {
+        val commandLine = GeneralCommandLine(command.asList())
+        val processHandler = CapturingProcessHandler(commandLine)
+
+        return processHandler.runProcess()
     }
 
     override fun addBoardConfiguration(board: Board) {
@@ -109,6 +110,10 @@ class CommandLinePlatformIOService : PlatformIOService {
         val content = contentManager.factory.createContent(console.component, "platformio init", false)
         contentManager.addContent(content)
         processHandler.startNotify()
+    }
+
+    override fun isAvailable(): Boolean {
+        return runCommand("platformio", "--version").exitCode == 0
     }
 
     data class BoardModel(

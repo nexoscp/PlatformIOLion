@@ -14,9 +14,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
 import platformio.project.ui.BoardCatalogDialog.BOARD_CATALOG_DIALOG_NAME
-import platformio.project.ui.NewPIOProjectSettingsForm.SELECT_BOARD_BUTTON_NAME
+import platformio.project.ui.NewPIOProjectSettingsForm.*
 import platformio.services.Board
 import platformio.services.PlatformIOService
 import javax.swing.JFrame
@@ -40,6 +41,10 @@ class NewPIOProjectSettingsFormTest {
     }
 
     private fun showWindow() {
+        showWindow(platformIOService)
+    }
+
+    private fun showWindow(platformIOService: PlatformIOService) {
         form = NewPIOProjectSettingsForm(platformIOService)
         frame.add(form.component)
         window.show()
@@ -114,6 +119,16 @@ class NewPIOProjectSettingsFormTest {
 
         selectedBoardTable.boardDoesNotExist(boardA)
         selectedBoardTable.boardExists(boardC)
+    }
+
+    @Test
+    fun `do not allow to pickboards if there is no PlatfromIO installation`() {
+        val platformIOService = mock(PlatformIOService::class.java)
+        `when`(platformIOService.isAvailable()).thenReturn(false)
+        showWindow(platformIOService)
+
+        window.button(SELECT_BOARD_BUTTON_NAME).requireDisabled()
+        window.label(ERROR_MESSAGE_LABEL).requireText(ERROR_MESSAGE)
     }
 
     private fun clickOnBoards(vararg boards: Board, extraAssertions: (DialogFixture) -> Any = {}) {

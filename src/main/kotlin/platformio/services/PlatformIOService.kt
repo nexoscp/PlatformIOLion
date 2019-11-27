@@ -5,6 +5,7 @@ interface PlatformIOService {
     fun loadAllBoards(): List<Board>
     fun addBoardConfiguration(board: Board)
     fun initCLionProject()
+    fun isAvailable() :Boolean
 }
 
 data class Board(

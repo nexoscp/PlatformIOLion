@@ -54,7 +54,7 @@ class Peer : ProjectGeneratorPeer<Settings> {
     val form = NewPIOProjectSettingsForm(ServiceManager.getService(PlatformIOService::class.java))
 
     override fun validate(): ValidationInfo? {
-        return null
+        return if (ServiceManager.getService(PlatformIOService::class.java).isAvailable()) null else ValidationInfo("No PlatformIO CLI found")
     }
 
     override fun getSettings(): Settings {

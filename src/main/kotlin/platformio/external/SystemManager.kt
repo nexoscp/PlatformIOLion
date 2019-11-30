@@ -30,7 +30,7 @@ class SystemManager : ExternalSystemManager<platformio.external.settings.Project
     }
 
     override fun getExecutionSettingsProvider(): Function<Pair<Project, String>, Execution> {
-        return Function { pair -> Execution() } //FIXME what do this pair mean? should bee some arguments Could be Task-Name and Description
+        return Function { _ -> Execution() } //FIXME what do this pair mean? should bee some arguments Could be Task-Name and Description
     }
 
     override fun getExternalProjectDescriptor(): FileChooserDescriptor {

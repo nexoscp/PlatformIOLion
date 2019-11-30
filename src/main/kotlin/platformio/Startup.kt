@@ -78,7 +78,6 @@ fun markDirs(root: VirtualFile, psi: PsiFile, module: Module, rootManager: Modul
     var srcDirName: String = "src"
     var testSrcDirName: String = "test"
     findChildrenOfType(psi, IniSection::class.java).forEach { iniSection ->
-        PlatformIO.log.info("Section ${iniSection.nameText}")
         when (iniSection.nameText) {
             "[platformio]" -> {
                 iniSection.iniPropertyList.forEach {
@@ -118,11 +117,11 @@ fun markDirs(root: VirtualFile, psi: PsiFile, module: Module, rootManager: Modul
                     if (src == null) {
                         if (!rootManager.excludeRoots.contains(l) && !rootManager.sourceRoots.contains(l)) {
                             content.addSourceFolder(l, false)
-                        } else {}
+                        }
                     } else {
                         if (!rootManager.excludeRoots.contains(src) && !rootManager.sourceRoots.contains(src)) {
                             content.addSourceFolder(src, false)
-                        } else {}
+                        }
                     }
                 }
             }

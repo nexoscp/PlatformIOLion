@@ -51,7 +51,7 @@ class Generator : DirectoryProjectGenerator<Settings>, CustomStepProjectGenerato
 }
 
 class Peer : ProjectGeneratorPeer<Settings> {
-    val form = NewPIOProjectSettingsForm(ServiceManager.getService(PlatformIOService::class.java))
+    private val form = NewPIOProjectSettingsForm(ServiceManager.getService(PlatformIOService::class.java))
 
     override fun validate(): ValidationInfo? {
         return if (ServiceManager.getService(PlatformIOService::class.java).isAvailable()) null else ValidationInfo("No PlatformIO CLI found")

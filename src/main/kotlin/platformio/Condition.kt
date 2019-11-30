@@ -1,22 +1,30 @@
 package platformio
 
 import com.intellij.openapi.module.Module
+import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.roots.ModuleRootManager
 import com.intellij.openapi.util.Condition
-import platformio.PlatformIO.log
+import com.intellij.openapi.vfs.VirtualFile
 
 class Condition : Condition<Project> {
-
-
     override fun value(project:Project): Boolean {
-        log.info("Checking $project")
-//        ModuleManager.getInstance(project).modules.all {m -> inspect(m)}
-  //      val rootManager = ModuleRootManager.getInstance(project.)
-    //    return (rootManager.contentRoots.find { file -> file.name == "platformio.INI" })?.exists() == true
-        return true
+       return ModuleManager.getInstance(project).modules.fold(false){ found, module -> inspectModule(found, module)}
     }
 
-    private fun inspect(module: Module?):Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun inspectModule(found:Boolean, module: Module):Boolean {
+        if (found) return true
+        val rootManager = ModuleRootManager.getInstance(module)
+        return rootManager.contentRoots.fold(false) { f, contentRoot -> inspectContentRoot(f, contentRoot) }
+    }
+
+    private fun inspectContentRoot(found:Boolean, contentRoot: VirtualFile):Boolean {
+        if(found) return true;
+        return contentRoot.children.fold(false) { f, file -> isPlatformIOINI(f, file) }
+    }
+
+    private fun isPlatformIOINI(found: Boolean, file: VirtualFile):Boolean {
+        if(found) return true
+        return file.name == "platformio.ini"
     }
 }

@@ -10,7 +10,7 @@ import platformio.Section
 
 class INICompletionContributor : CompletionContributor() {
     init {
-        val provider = INICompletionProvider<CompletionParameters>()
+        val provider = INICompletionProvider()
         extend(
                 CompletionType.BASIC,
                 PlatformPatterns.psiElement(IniTokenTypes.SECTION_NAME).withLanguage(IniLanguage.INSTANCE),
@@ -22,10 +22,8 @@ class INICompletionContributor : CompletionContributor() {
     }
 }
 
-class INICompletionProvider<V : CompletionParameters> : CompletionProvider<V>() {
-    override fun addCompletions(completionParameters: V, processingContext: ProcessingContext, resultSet: CompletionResultSet) {
-        Section.sections.forEach {
-            resultSet.addElement(LookupElementBuilder.create(it))
-        }
+class INICompletionProvider : CompletionProvider<CompletionParameters>() {
+    override fun addCompletions(completionParameters: CompletionParameters, processingContext: ProcessingContext, resultSet: CompletionResultSet) {
+        Section.sections.forEach { resultSet.addElement(LookupElementBuilder.create(it)) }
     }
 }

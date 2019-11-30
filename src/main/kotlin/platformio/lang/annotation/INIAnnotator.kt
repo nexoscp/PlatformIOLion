@@ -10,7 +10,6 @@ import platformio.Section
 // https://www.jetbrains.org/intellij/sdk/docs/tutorials/custom_language_support/annotator.html
 class INIAnnotator: Annotator {
     override fun annotate(element: PsiElement, annotationHolder: AnnotationHolder) {
-        val project = element.project
         val file = element.containingFile.virtualFile //figure out we are looking at projects platformio.ini
         if(file.name == PlatformIO.INI && element is IniPsiElement) {
             val text = element.node.firstChildNode?.text
@@ -23,10 +22,10 @@ class INIAnnotator: Annotator {
                         }
                     }
                     is IniKeyName -> {
-                        PlatformIO.log.info("*** key " + text)
+                        // for now, nothing to do
                     }
                     is IniValue -> {
-                        PlatformIO.log.info("*** value " + text)
+                        // for now, nothing to do
                     }
                 }
             }

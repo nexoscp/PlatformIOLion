@@ -38,6 +38,7 @@ class NewPIOProjectSettingsFormTest {
     @Before
     fun setUp() {
         `when`(platformIOService.loadAllBoards()).thenReturn(boards)
+        `when`(platformIOService.isAvailable()).thenReturn(true)
     }
 
     private fun showWindow() {

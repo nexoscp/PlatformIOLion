@@ -1,6 +1,8 @@
 # PlatformIOLion
 Intellij IDEA/Lion Plugin to integrate PlatformIO
 
+This Project is dead. Use https://plugins.jetbrains.com/plugin/13922-platformio-for-clion instead.
+
 <dl>
     <dt>creating new project</dt>
     <dd>select boards and create project using <code>platform init</code></dd>
